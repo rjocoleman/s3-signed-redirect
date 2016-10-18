@@ -4,6 +4,7 @@ import (
 	"fmt"
   "net/http"
   "time"
+  "path"
 
 	"github.com/gin-gonic/gin"
   "github.com/goware/urlx"
@@ -44,10 +45,10 @@ func main() {
   r.GET("/:path", func(c *gin.Context) {
 
     log.Debug("Path: ", c.Request.URL.String())
-    log.Debug("S3 Host: ", viper.GetString("s3_host"))
+    log.Debug("S3 Endpoint: ", viper.GetString("s3_endpoint"))
 
-    url, _ := urlx.Parse(viper.GetString("s3_host"))
-    url.Path = c.Request.URL.String()
+    url, _ := urlx.Parse(viper.GetString("s3_endpoint"))
+    url.Path = path.Join(viper.GetString("s3_bucket"), c.Request.URL.String())
     log.Debug("New URL: ", url.String())
 
     expireTime := time.Now().Add(viper.GetDuration("timeout"))

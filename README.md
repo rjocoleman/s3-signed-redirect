@@ -19,10 +19,19 @@ Config is also loaded from ENV variables, the same names as the yaml keys prefix
 ```yaml
 aws_access_key_id: foo
 aws_secret_access_key: bar
-s3_host: rjoc-bbc2.s3-eu-west-1.amazonaws.com
+s3_endpoint: s3-eu-west-1.amazonaws.com
+s3_bucket: rjoc-bbc2
 
 address: 127.0.0.1
 port: 3000
 timeout: 7200s
 debug: false
+```
+
+## Nginx example
+
+```
+    location / {
+      proxy_pass http://127.0.0.1:3000/;
+    }
 ```
